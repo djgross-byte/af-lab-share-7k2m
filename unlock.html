@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Fluency — Unlock</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .unlock-wrap {
+      min-height: calc(100vh - 4rem);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+    }
+    .unlock-card {
+      background: var(--exhibit-white);
+      border: 1px solid var(--mesa-mist);
+      border-left: 4px solid var(--copper);
+      box-shadow: var(--shadow);
+      max-width: 28rem;
+      width: 100%;
+      padding: 2rem 1.75rem;
+    }
+    .unlock-card h1 {
+      font-size: 1.65rem;
+      margin-bottom: 0.35em;
+    }
+    .unlock-card .lede {
+      font-size: 1rem;
+      color: var(--stone);
+      margin-bottom: 1.5rem;
+    }
+    .unlock-form label {
+      display: block;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 0.45rem;
+    }
+    .unlock-form input[type="password"] {
+      width: 100%;
+      font-family: Calibri, "Segoe UI", sans-serif;
+      font-size: 1.05rem;
+      color: var(--ink);
+      background: var(--desert-paper);
+      border: 1px solid var(--mesa-mist);
+      border-radius: 2px;
+      padding: 0.7rem 0.85rem;
+      margin-bottom: 1rem;
+      outline: none;
+    }
+    .unlock-form input[type="password"]:focus {
+      border-color: var(--copper);
+      outline: 2px solid rgba(191, 91, 62, 0.25);
+      outline-offset: 1px;
+    }
+    .unlock-form button {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--exhibit-white);
+      background: var(--copper);
+      border: none;
+      border-radius: 2px;
+      padding: 0.75rem 1.25rem;
+      cursor: pointer;
+      width: 100%;
+    }
+    .unlock-form button:hover {
+      background: var(--canyon-clay);
+    }
+    .unlock-error {
+      color: var(--stone);
+      font-size: 0.95rem;
+      margin: 0 0 1rem;
+      min-height: 1.4em;
+    }
+    .unlock-error[hidden] { display: none; }
+  </style>
+</head>
+<body>
+  <div class="spine" aria-hidden="true"></div>
+  <main class="unlock-wrap">
+    <div class="unlock-card">
+      <p class="eyebrow">PRIVATE SITE</p>
+      <h1>AI Fluency</h1>
+      <hr class="rule rule--copper">
+      <p class="lede">Enter the workshop password to continue. Access lasts for this browser session.</p>
+      <form class="unlock-form" id="unlock-form" autocomplete="off">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required autofocus>
+        <p class="unlock-error" id="unlock-error" hidden role="alert">That password doesn’t match. Try again.</p>
+        <button type="submit">Unlock</button>
+      </form>
+    </div>
+  </main>
+  <script>
+    (function () {
+      var EXPECTED = "16a7ed1b781a6d2c5ebeb71a7145833b5ac9fb9b6e7b7acd6b7c89feaa4047d3";
+
+      function toHex(buffer) {
+        return Array.from(new Uint8Array(buffer))
+          .map(function (b) { return b.toString(16).padStart(2, "0"); })
+          .join("");
+      }
+
+      async function sha256Hex(text) {
+        var data = new TextEncoder().encode(text);
+        var digest = await crypto.subtle.digest("SHA-256", data);
+        return toHex(digest);
+      }
+
+      var form = document.getElementById("unlock-form");
+      var errorEl = document.getElementById("unlock-error");
+      var input = document.getElementById("password");
+
+      if (sessionStorage.getItem("aiFluencyAuth") === "1") {
+        location.replace("index.html");
+        return;
+      }
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        errorEl.hidden = true;
+        var pwd = input.value || "";
+        sha256Hex(pwd).then(function (hash) {
+          if (hash === EXPECTED) {
+            sessionStorage.setItem("aiFluencyAuth", "1");
+            location.replace("index.html");
+          } else {
+            errorEl.hidden = false;
+            input.select();
+          }
+        }).catch(function () {
+          errorEl.textContent = "Could not verify password in this browser.";
+          errorEl.hidden = false;
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
