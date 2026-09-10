@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Fluency — Home</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="spine" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="site-name" href="index.html">AI Fluency</a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="index.html" class="active">Home</a>
+        <a href="principles.html">Principles</a>
+        <a href="skills.html">Skills</a>
+        <a href="glossary.html">Glossary</a>
+        <a href="sources.html">Sources</a>
+        <a href="assessment.html">Assessment</a>
+      </nav>
+    </div>
+  </header>
+  <main class="main main--wide">
+    <header class="page-header">
+      <p class="eyebrow">TEAM TEACHING</p>
+      <h1>AI Fluency</h1>
+      <hr class="rule rule--copper">
+      <p class="lede">A private teaching site for the AI Fluency workshop. Use these pages to walk the team through current principles, skills, shared vocabulary, learning sources, and a self-assessment that stays on your machine.</p>
+    </header>
+    <div class="card-grid">
+    <a class="card card-link" href="principles.html">
+      <p class="eyebrow">PRINCIPLES</p>
+      <h2>Principles</h2>
+      <p class="card-desc">Ten current principles of AI fluency — the workshop spine.</p>
+    </a>
+    <a class="card card-link" href="skills.html">
+      <p class="eyebrow">SKILLS</p>
+      <h2>Skills</h2>
+      <p class="card-desc">The same ten topics as practical skills you can practice.</p>
+    </a>
+    <a class="card card-link" href="glossary.html">
+      <p class="eyebrow">GLOSSARY</p>
+      <h2>Glossary</h2>
+      <p class="card-desc">Appendix 1 — AI terms in plain language.</p>
+    </a>
+    <a class="card card-link" href="sources.html">
+      <p class="eyebrow">SOURCES</p>
+      <h2>Learning Sources</h2>
+      <p class="card-desc">Appendix 2 — types of online learning sources, with examples.</p>
+    </a>
+    <a class="card card-link" href="assessment.html">
+      <p class="eyebrow">ASSESSMENT</p>
+      <h2>Self-Assessment</h2>
+      <p class="card-desc">Private reflection prompts — for you, not to turn in.</p>
+    </a>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <p>Private teaching site · Arizona Design Lab palette</p>
+  </footer>
+  <script>
+    (function () {
+      var path = location.pathname.split("/").pop() || "index.html";
+      document.querySelectorAll(".site-nav a").forEach(function (a) {
+        if (a.getAttribute("href") === path) a.classList.add("active");
+      });
+    })();
+  </script>
+  <script src="js/auth.js" defer></script>
+</body>
+</html>
